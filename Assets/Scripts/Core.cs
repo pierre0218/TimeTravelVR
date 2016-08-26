@@ -34,28 +34,30 @@ public class Core : UnitySingleton<Core> {
 
     void CheckFloorFace()
     {
-        if (MainPlayer.transform.position.x > 0 && MainPlayer.transform.position.x < RightBoundX)
+
+        return;
+        if (3* RightBoundX*MainPlayer.transform.parent.localPosition.x > 0 && 3 * RightBoundX*MainPlayer.transform.parent.localPosition.x < RightBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.Top)
             {
                 FloorObj.SetCurrentFace(Floor.Face.Top);
             }
         }
-        if (MainPlayer.transform.position.x >= RightBoundX && MainPlayer.transform.position.x < 3f * RightBoundX)
+        if (3 * RightBoundX*MainPlayer.transform.parent.localPosition.x >= RightBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x < 3f * RightBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.TopRight)
             {
                 FloorObj.SetCurrentFace(Floor.Face.TopRight);
             }
         }
-        if (MainPlayer.transform.position.x >= 3f * RightBoundX && MainPlayer.transform.position.x < 5f * RightBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x >= 3f * RightBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x < 5f * RightBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.DownRight)
             {
                 FloorObj.SetCurrentFace(Floor.Face.DownRight);
             }
         }
-        if (MainPlayer.transform.position.x >= 5f * RightBoundX && MainPlayer.transform.position.x < 6 * RightBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x >= 5f * RightBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x < 6 * RightBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.Down)
             {
@@ -63,14 +65,14 @@ public class Core : UnitySingleton<Core> {
             }
         }
 
-        if (MainPlayer.transform.position.x <= 0 && MainPlayer.transform.position.x > LeftBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x <= 0 && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x > LeftBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.Top)
             {
                 FloorObj.SetCurrentFace(Floor.Face.Top);
             }
         }
-        if (MainPlayer.transform.position.x <= LeftBoundX && MainPlayer.transform.position.x > 3f * LeftBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x <= LeftBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x > 3f * LeftBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.TopLeft)
             {
@@ -78,14 +80,14 @@ public class Core : UnitySingleton<Core> {
             }
         }
 
-        if (MainPlayer.transform.position.x <= 3f * LeftBoundX && MainPlayer.transform.position.x > 5f * LeftBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x <= 3f * LeftBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x > 5f * LeftBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.DownLeft)
             {
                 FloorObj.SetCurrentFace(Floor.Face.DownLeft);
             }
         }
-        if (MainPlayer.transform.position.x <= 5f * LeftBoundX && MainPlayer.transform.position.x > 6 * LeftBoundX)
+        if (3 * RightBoundX * MainPlayer.transform.parent.localPosition.x <= 5f * LeftBoundX && 3 * RightBoundX * MainPlayer.transform.parent.localPosition.x > 6 * LeftBoundX)
         {
             if (FloorObj.CurrentFace != Floor.Face.Down)
             {
