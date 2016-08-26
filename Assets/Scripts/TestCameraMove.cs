@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class TestCameraMove : MonoBehaviour {
-	float moveSpeed = 10;
+	float moveSpeed = 1f;
 
 	// Use this for initialization
 	void Start () {

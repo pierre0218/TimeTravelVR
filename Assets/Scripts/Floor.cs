@@ -27,7 +27,7 @@ public class Floor : MonoBehaviour {
 
 
     float rotateSpeed = 50;
-    const float edgeLong = 100;
+    const float edgeLong = 1;
     float hexagonHeight = edgeLong * 1.732f;
 
     bool isRotating = false;
@@ -67,8 +67,8 @@ public class Floor : MonoBehaviour {
         {
             transform.RotateAround(rotatePivot.transform.position, Vector3.forward, rotateDirection* rotateSpeed * Time.deltaTime);
 
-            if (Mathf.Abs(transform.position.x- Configuration[configIndex].x)<= 10 &&
-                Mathf.Abs(transform.position.y - Configuration[configIndex].y) <= 10)
+            if (Mathf.Abs(transform.position.x- Configuration[configIndex].x)<= 0.1f &&
+                Mathf.Abs(transform.position.y - Configuration[configIndex].y) <= 0.1f)
             {
                 isRotating = false;
 
