@@ -157,6 +157,6 @@ public class Core : UnitySingleton<Core> {
     {
         DialogManager.gameObject.SetActive(false);
         DialogManager.gameObject.SetActive(true);
-        DialogManager.displaySprite = s;
+        DialogManager.SetSprite(s);
     }
 }
