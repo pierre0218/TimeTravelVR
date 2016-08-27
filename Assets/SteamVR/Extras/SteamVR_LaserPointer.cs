@@ -87,9 +87,11 @@ public class SteamVR_LaserPointer : MonoBehaviour
 
         SteamVR_TrackedController controller = GetComponent<SteamVR_TrackedController>();
 
-        Ray raycast = new Ray(transform.position, transform.forward);
+        //Ray raycast = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        bool bHit = Physics.Raycast(raycast, out hit);
+        //bool bHit = Physics.Raycast(raycast, out hit);
+        int layer = 1 << LayerMask.NameToLayer("Interactive");
+        bool bHit = Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, layer);
 
         if(previousContact && previousContact != hit.transform)
         {

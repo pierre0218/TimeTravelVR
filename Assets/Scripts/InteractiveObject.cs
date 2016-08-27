@@ -31,12 +31,18 @@ public class InteractiveObject : MonoBehaviour {
 
     public void OnClicked()
     {
+        Debug.Log(gameObject.name + "clicked!");
+
         clickCount += 1;
 
         if (clickCount-1 > 0)
         {
             int dialogIndex = Mathf.Min(clickCount - 1, Dialog.Length - 1);
-            Core.Instance.ShowDialog(Dialog[dialogIndex]);
+
+            if (dialogIndex < Dialog.Length && dialogIndex > 0)
+            {
+                Core.Instance.ShowDialog(Dialog[dialogIndex]);
+            }
         }
 
         if (CurrentType == Type.Room3Diary)
