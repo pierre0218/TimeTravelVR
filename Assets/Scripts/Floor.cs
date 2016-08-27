@@ -56,6 +56,13 @@ public class Floor : MonoBehaviour {
         get { return currentRoom; }
     }
 
+    float targetPosX = 0;
+    float targetRotZ = 0;
+
+    float targetPosZ = 0;
+
+    int currentRoomIndex = 0;
+
     // Use this for initialization
     void Start () {
 	
@@ -63,21 +70,37 @@ public class Floor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       /* if (isRotating)
+        if (isRotating)
         {
-            transform.RotateAround(rotatePivot.transform.position, Vector3.forward, rotateDirection* rotateSpeed * Time.deltaTime);
+            Vector3 currentRot = transform.rotation.eulerAngles;
+            Vector3 currentPos = transform.position;
 
-            if (Mathf.Abs(transform.position.x- Core.Instance.HexagonWidth * Configuration[configIndex].x)<= 0.1f &&
-                Mathf.Abs(transform.position.y - Core.Instance.HexagonWidth * Configuration[configIndex].y) <= 0.1f)
+            if (currentRot.z > 180)
+            {
+                currentRot.z -= 360;
+            }
+
+            if (currentRot.z < -180)
+            {
+                currentRot.z += 360;
+            }
+
+            float rotDiff = Mathf.Abs(currentRot.z - targetRotZ);
+
+
+            currentRot.z = 0.99f*currentRot.z + 0.01f*targetRotZ;
+            currentPos.x = 0.99f*currentPos.x + 0.01f*targetPosX;
+
+            transform.position = currentPos;
+            transform.rotation = Quaternion.Euler(currentRot);
+
+            if (Mathf.Abs(currentPos.x - targetPosX) < 1 && rotDiff < 10)
             {
                 isRotating = false;
 
-                Vector3 currentRot = transform.rotation.eulerAngles;
-                Vector3 currentPos = transform.position;
 
-                currentRot.z = Configuration[configIndex].z;
-                currentPos.x = Core.Instance.HexagonWidth * Configuration[configIndex].x;
-                currentPos.y = Core.Instance.HexagonWidth * Configuration[configIndex].y;
+                currentRot.z = targetRotZ;
+                currentPos.x = targetPosX;
 
                 transform.position = currentPos;
                 transform.rotation = Quaternion.Euler(currentRot);
@@ -86,174 +109,83 @@ public class Floor : MonoBehaviour {
 
         if (isTransporting)
         {
-            Vector3 pos = transform.position;
-            if (roomObjs[(int)currentRoom].transform.position.z > Core.Instance.MainPlayer.transform.position.z)
-            {
-                pos.z -= 50;
-            }
-            else
-            {
-                pos.z += 50;
-            }
+            Vector3 pos = transform.localPosition;
 
-            transform.position = pos;
-            float distance = Mathf.Abs(roomObjs[(int)currentRoom].transform.position.z - Core.Instance.MainPlayer.transform.position.z);
-            if (distance < 60)
+            pos.z = 0.8f * pos.z + 0.2f * targetPosZ;
+
+            transform.localPosition = pos;
+
+            float distance = Mathf.Abs(pos.z - targetPosZ);
+            if (distance < 1)
             {
                 isTransporting = false;
+
+                pos.z = targetPosZ;
+                transform.localPosition = pos;
             }
-        }*/
+        }
 	}
 
     public void SetCurrentFace(Face face)
     {
-        /*if (currentFace != face)
+        if (currentFace != face)
         {
             isRotating = true;
 
-            if (currentFace == Face.Top && face == Face.TopRight)
+            Vector3 currentRot = transform.rotation.eulerAngles;
+            Vector3 currentPos = transform.position;
+
+            switch (face)
             {
-                rotateDirection = 1;
-                rotatePivot = pivots[0];
+                case Face.Top:
 
-                configIndex = 1;
-            }
-            if (currentFace == Face.TopRight && face == Face.Top)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[0];
+                    currentRot.z = Configuration[0].z;
+                    currentPos.x = (Core.Instance.XBounds[3] + Core.Instance.XBounds[2]) / 2;
 
-                configIndex = 0;
-            }
+                    break;
 
-            if (currentFace == Face.TopRight && face == Face.DownRight)
-            {
-                rotateDirection = 1;
-                rotatePivot = pivots[1];
+                case Face.TopRight:
 
-                configIndex = 2;
-            }
-            if (currentFace == Face.DownRight && face == Face.TopRight)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[1];
+                    currentRot.z = Configuration[1].z;
+                    currentPos.x = (Core.Instance.XBounds[4] + Core.Instance.XBounds[3]) / 2;
 
-                configIndex = 1;
-            }
+                    break;
 
-            if (currentFace == Face.DownRight && face == Face.Down)
-            {
-                rotateDirection = 1;
-                rotatePivot = pivots[2];
+                case Face.DownRight:
 
-                configIndex = 3;
-            }
-            if (currentFace == Face.Down && face == Face.DownRight)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[2];
+                    currentRot.z = Configuration[2].z;
+                    currentPos.x = (Core.Instance.XBounds[5] + Core.Instance.XBounds[4]) / 2;
 
-                configIndex = 2;
-            }
+                    break;
 
+                case Face.Down:
 
-            if (currentFace == Face.Top && face == Face.TopLeft)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[5];
+                    currentRot.z = Configuration[3].z;
+                    currentPos.x = (Core.Instance.XBounds[6] + Core.Instance.XBounds[5]) / 2;
 
-                configIndex = 4;
-            }
-            if (currentFace == Face.TopLeft && face == Face.Top)
-            {
-                rotateDirection = 1;
-                rotatePivot = pivots[5];
+                    break;
 
-                configIndex = 0;
+                case Face.TopLeft:
+
+                    currentRot.z = Configuration[4].z;
+                    currentPos.x = (Core.Instance.XBounds[2] + Core.Instance.XBounds[1]) / 2;
+
+                    break;
+
+                case Face.DownLeft:
+
+                    currentRot.z = Configuration[5].z;
+                    currentPos.x = (Core.Instance.XBounds[1] + Core.Instance.XBounds[0]) / 2;
+
+                    break;
             }
 
-            if (currentFace == Face.TopLeft && face == Face.DownLeft)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[4];
-
-                configIndex = 5;
-            }
-            if (currentFace == Face.DownLeft && face == Face.TopLeft)
-            {
-                rotateDirection = 1;
-                rotatePivot = pivots[4];
-
-                configIndex = 4;
-            }
-
-            if (currentFace == Face.DownLeft && face == Face.Down)
-            {
-                rotateDirection = -1;
-                rotatePivot = pivots[3];
-
-                configIndex = 6;
-            }
-            if (currentFace == Face.Down && face == Face.DownLeft)
-            {
-                rotateDirection = 1;
-                rotatePivot = pivots[3];
-
-                configIndex = 5;
-            }
-        }*/
-        Vector3 currentRot = transform.rotation.eulerAngles;
-        Vector3 currentPos = transform.position;
-
-        switch (face)
-        {
-            case Face.Top:
-
-                currentRot.z = Configuration[0].z;
-                currentPos.x = (Core.Instance.XBounds[3]+ Core.Instance.XBounds[2])/2;
-                
-                break;
-
-            case Face.TopRight:
-
-                currentRot.z = Configuration[1].z;
-                currentPos.x = (Core.Instance.XBounds[4] + Core.Instance.XBounds[3]) / 2;
-
-                break;
-
-            case Face.DownRight:
-
-                currentRot.z = Configuration[2].z;
-                currentPos.x = (Core.Instance.XBounds[5] + Core.Instance.XBounds[4]) / 2;
-
-                break;
-
-            case Face.Down:
-
-                currentRot.z = Configuration[3].z;
-                currentPos.x = (Core.Instance.XBounds[6] + Core.Instance.XBounds[5]) / 2;
-
-                break;
-
-            case Face.TopLeft:
-
-                currentRot.z = Configuration[4].z;
-                currentPos.x = (Core.Instance.XBounds[2] + Core.Instance.XBounds[1]) / 2;
-
-                break;
-
-            case Face.DownLeft:
-
-                currentRot.z = Configuration[5].z;
-                currentPos.x = (Core.Instance.XBounds[1] + Core.Instance.XBounds[0]) / 2;
-
-                break;
+            targetPosX = currentPos.x;
+            targetRotZ = currentRot.z;
         }
 
-        //currentPos.y = 0;
-
-        transform.position = currentPos;
-        transform.rotation = Quaternion.Euler(currentRot);
+        // transform.position = currentPos;
+        // transform.rotation = Quaternion.Euler(currentRot);
         currentFace = face;
     }
 
@@ -264,5 +196,15 @@ public class Floor : MonoBehaviour {
             isTransporting = true;
         }
         currentRoom = room;
+    }
+
+    public void SetTransportingRoom(int roomI)
+    {
+        if (currentRoomIndex != roomI)
+        {
+            targetPosZ = Core.Instance.RoomPosZ[roomI];
+            isTransporting = true;
+        }
+        currentRoomIndex = roomI;
     }
 }

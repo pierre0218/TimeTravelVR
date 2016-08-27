@@ -23,6 +23,8 @@ public class TriggerArea : MonoBehaviour {
         Vector3 floorPos = Core.Instance.FloorObj.transform.localPosition;
         floorPos.z = Core.Instance.RoomPosZ[NextRoom];
 
-        Core.Instance.FloorObj.transform.localPosition = floorPos;
+        // Core.Instance.FloorObj.transform.localPosition = floorPos;
+
+        Core.Instance.FloorObj.SetTransportingRoom(NextRoom);
     }
 }
