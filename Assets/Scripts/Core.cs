@@ -20,11 +20,58 @@ public class Core : UnitySingleton<Core> {
     [SerializeField]
     float BackBoundZ;
 
+    float PlayAreaWidth = 0;
+    float PlayAreaLong = 0;
+    float hexagonEdgeWidth = 0;
+    float roomLong = 0;
+
+    float roomOffsetLong = 0;
+
+    float roomGap = 2;
+
+    public float HexagonWidth
+    {
+        get { return hexagonEdgeWidth; }
+    }
+
+    float[] xBounds = new float[7];
+    public float[] XBounds
+    {
+        get { return xBounds; }
+    }
+
+    float[] roomPosZ = new float[5];
+    public float[] RoomPosZ
+    {
+        get { return roomPosZ; }
+    }
+
     // Use this for initialization
     void Start () {
 		DontDestroyOnLoad (this);
-	
-	}
+
+        PlayAreaWidth = RightBoundX - LeftBoundX;
+
+        PlayAreaLong = FrontBoundZ - BackBoundZ;
+
+        hexagonEdgeWidth = PlayAreaWidth / 6;
+
+        roomLong = PlayAreaLong/2;
+
+        roomOffsetLong = roomLong / 3;
+
+        xBounds[0] = LeftBoundX;
+        for (int i = 1; i <= 5; i++)
+        {
+            xBounds[i] = LeftBoundX + i * hexagonEdgeWidth;
+        }
+        xBounds[6] = RightBoundX;
+
+        for (int j = 0; j <= 4; j++)
+        {
+            roomPosZ[j] =  j * roomOffsetLong - j*roomGap;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -34,28 +81,28 @@ public class Core : UnitySingleton<Core> {
 
     void CheckFloorFace()
     {
-        if (MainPlayer.transform.position.x > 0 && MainPlayer.transform.position.x < RightBoundX)
+        if (MainPlayer.transform.position.x >= xBounds[2] && MainPlayer.transform.position.x < xBounds[3])
         {
             if (FloorObj.CurrentFace != Floor.Face.Top)
             {
                 FloorObj.SetCurrentFace(Floor.Face.Top);
             }
         }
-        if (MainPlayer.transform.position.x >= RightBoundX && MainPlayer.transform.position.x < 3f * RightBoundX)
+        if (MainPlayer.transform.position.x >= xBounds[3] && MainPlayer.transform.position.x < xBounds[4])
         {
             if (FloorObj.CurrentFace != Floor.Face.TopRight)
             {
                 FloorObj.SetCurrentFace(Floor.Face.TopRight);
             }
         }
-        if (MainPlayer.transform.position.x >= 3f * RightBoundX && MainPlayer.transform.position.x < 5f * RightBoundX)
+        if (MainPlayer.transform.position.x >= xBounds[4] && MainPlayer.transform.position.x < xBounds[5])
         {
             if (FloorObj.CurrentFace != Floor.Face.DownRight)
             {
                 FloorObj.SetCurrentFace(Floor.Face.DownRight);
             }
         }
-        if (MainPlayer.transform.position.x >= 5f * RightBoundX && MainPlayer.transform.position.x < 6 * RightBoundX)
+        if (MainPlayer.transform.position.x >= xBounds[5] && MainPlayer.transform.position.x < xBounds[6])
         {
             if (FloorObj.CurrentFace != Floor.Face.Down)
             {
@@ -63,14 +110,8 @@ public class Core : UnitySingleton<Core> {
             }
         }
 
-        if (MainPlayer.transform.position.x <= 0 && MainPlayer.transform.position.x > LeftBoundX)
-        {
-            if (FloorObj.CurrentFace != Floor.Face.Top)
-            {
-                FloorObj.SetCurrentFace(Floor.Face.Top);
-            }
-        }
-        if (MainPlayer.transform.position.x <= LeftBoundX && MainPlayer.transform.position.x > 3f * LeftBoundX)
+
+        if (MainPlayer.transform.position.x >= xBounds[1] && MainPlayer.transform.position.x < xBounds[2])
         {
             if (FloorObj.CurrentFace != Floor.Face.TopLeft)
             {
@@ -78,20 +119,14 @@ public class Core : UnitySingleton<Core> {
             }
         }
 
-        if (MainPlayer.transform.position.x <= 3f * LeftBoundX && MainPlayer.transform.position.x > 5f * LeftBoundX)
+        if (MainPlayer.transform.position.x >= xBounds[0] && MainPlayer.transform.position.x < xBounds[1])
         {
             if (FloorObj.CurrentFace != Floor.Face.DownLeft)
             {
                 FloorObj.SetCurrentFace(Floor.Face.DownLeft);
             }
         }
-        if (MainPlayer.transform.position.x <= 5f * LeftBoundX && MainPlayer.transform.position.x > 6 * LeftBoundX)
-        {
-            if (FloorObj.CurrentFace != Floor.Face.Down)
-            {
-                FloorObj.SetCurrentFace(Floor.Face.Down);
-            }
-        }
+
     }
 
     void CheckCurrentRoom()

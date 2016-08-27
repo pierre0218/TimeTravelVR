@@ -63,12 +63,12 @@ public class Floor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (isRotating)
+       /* if (isRotating)
         {
             transform.RotateAround(rotatePivot.transform.position, Vector3.forward, rotateDirection* rotateSpeed * Time.deltaTime);
 
-            if (Mathf.Abs(transform.position.x- Configuration[configIndex].x)<= 0.1f &&
-                Mathf.Abs(transform.position.y - Configuration[configIndex].y) <= 0.1f)
+            if (Mathf.Abs(transform.position.x- Core.Instance.HexagonWidth * Configuration[configIndex].x)<= 0.1f &&
+                Mathf.Abs(transform.position.y - Core.Instance.HexagonWidth * Configuration[configIndex].y) <= 0.1f)
             {
                 isRotating = false;
 
@@ -76,8 +76,8 @@ public class Floor : MonoBehaviour {
                 Vector3 currentPos = transform.position;
 
                 currentRot.z = Configuration[configIndex].z;
-                currentPos.x = Configuration[configIndex].x;
-                currentPos.y = Configuration[configIndex].y;
+                currentPos.x = Core.Instance.HexagonWidth * Configuration[configIndex].x;
+                currentPos.y = Core.Instance.HexagonWidth * Configuration[configIndex].y;
 
                 transform.position = currentPos;
                 transform.rotation = Quaternion.Euler(currentRot);
@@ -102,12 +102,12 @@ public class Floor : MonoBehaviour {
             {
                 isTransporting = false;
             }
-        }
+        }*/
 	}
 
     public void SetCurrentFace(Face face)
     {
-        if (currentFace != face)
+        /*if (currentFace != face)
         {
             isRotating = true;
 
@@ -201,7 +201,59 @@ public class Floor : MonoBehaviour {
 
                 configIndex = 5;
             }
+        }*/
+        Vector3 currentRot = transform.rotation.eulerAngles;
+        Vector3 currentPos = transform.position;
+
+        switch (face)
+        {
+            case Face.Top:
+
+                currentRot.z = Configuration[0].z;
+                currentPos.x = (Core.Instance.XBounds[3]+ Core.Instance.XBounds[2])/2;
+                
+                break;
+
+            case Face.TopRight:
+
+                currentRot.z = Configuration[1].z;
+                currentPos.x = (Core.Instance.XBounds[4] + Core.Instance.XBounds[3]) / 2;
+
+                break;
+
+            case Face.DownRight:
+
+                currentRot.z = Configuration[2].z;
+                currentPos.x = (Core.Instance.XBounds[5] + Core.Instance.XBounds[4]) / 2;
+
+                break;
+
+            case Face.Down:
+
+                currentRot.z = Configuration[3].z;
+                currentPos.x = (Core.Instance.XBounds[6] + Core.Instance.XBounds[5]) / 2;
+
+                break;
+
+            case Face.TopLeft:
+
+                currentRot.z = Configuration[4].z;
+                currentPos.x = (Core.Instance.XBounds[2] + Core.Instance.XBounds[1]) / 2;
+
+                break;
+
+            case Face.DownLeft:
+
+                currentRot.z = Configuration[5].z;
+                currentPos.x = (Core.Instance.XBounds[1] + Core.Instance.XBounds[0]) / 2;
+
+                break;
         }
+
+        //currentPos.y = 0;
+
+        transform.position = currentPos;
+        transform.rotation = Quaternion.Euler(currentRot);
         currentFace = face;
     }
 
