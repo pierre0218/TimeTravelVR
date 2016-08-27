@@ -38,10 +38,17 @@ public class LaserButtonClicker : MonoBehaviour
     private void LaserPointer_PointerIn(object sender, PointerEventArgs e)
     {
 
-        if (e.target.gameObject.tag == "interactive" && targetObj == null)
+        if (targetObj == null)
         {
 
             targetObj = e.target.gameObject.GetComponent<InteractiveObject>();
+            if (targetObj == null)
+            {
+                if (e.target.gameObject.transform.parent != null)
+                {
+                    targetObj = e.target.gameObject.transform.parent.GetComponent<InteractiveObject>();
+                }
+            }
 
             pointerOnButton = true;
 
