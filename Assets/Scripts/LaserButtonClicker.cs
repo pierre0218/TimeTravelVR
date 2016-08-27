@@ -28,7 +28,11 @@ public class LaserButtonClicker : MonoBehaviour
 
         if (targetObj != null)
         {
-            Debug.Log("point out: " + targetObj.name);
+            Renderer[] renderers = targetObj.GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in renderers)
+            {
+                r.material.shader = Shader.Find("Standard");
+            }
 
             pointerOnButton = false;
             targetObj = null;
@@ -50,9 +54,16 @@ public class LaserButtonClicker : MonoBehaviour
                 }
             }
 
-            pointerOnButton = true;
+            if (targetObj != null)
+            {
+                Renderer[] renderers = targetObj.GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in renderers)
+                {
+                    r.material.shader = Shader.Find("Self-Illumin/Outlined Diffuse");
+                }
+            }
 
-            Debug.Log("point in: " + targetObj.name);
+            pointerOnButton = true;
         }
     }
 
