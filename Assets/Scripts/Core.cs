@@ -5,6 +5,7 @@ public class Core : UnitySingleton<Core> {
 
     public GameObject MainPlayer;
     public Floor FloorObj;
+    public DialogDisplayer DialogManager;
 
     //let right be a positive number
     [SerializeField]
@@ -27,7 +28,7 @@ public class Core : UnitySingleton<Core> {
 
     float roomOffsetLong = 0;
 
-    float roomGap = 2;
+    float roomGap = 8;
 
     public float HexagonWidth
     {
@@ -150,5 +151,12 @@ public class Core : UnitySingleton<Core> {
         {
             FloorObj.SetCurrentRoom(Floor.Room.Room4);
         }
+    }
+
+    public void ShowDialog(Sprite s)
+    {
+        DialogManager.gameObject.SetActive(false);
+        DialogManager.gameObject.SetActive(true);
+        DialogManager.displaySprite = s;
     }
 }
