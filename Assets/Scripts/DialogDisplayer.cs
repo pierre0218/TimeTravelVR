@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DialogDisplayer : MonoBehaviour {
 
-    public Sprite displaySprite;
+    public SpriteRenderer renderer;
 
     float displayTimeCounter = 0;
     void OnEnable()
@@ -13,8 +13,9 @@ public class DialogDisplayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        renderer = GetComponent<SpriteRenderer>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,4 +34,9 @@ public class DialogDisplayer : MonoBehaviour {
         }
 	
 	}
+
+    public void SetSprite(Sprite s)
+    {
+        renderer.sprite = s;
+    }
 }

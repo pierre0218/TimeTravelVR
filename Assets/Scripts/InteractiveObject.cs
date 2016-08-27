@@ -35,11 +35,11 @@ public class InteractiveObject : MonoBehaviour {
 
         clickCount += 1;
 
-        if (clickCount-1 > 0)
+        if (clickCount-1 >= 0)
         {
             int dialogIndex = Mathf.Min(clickCount - 1, Dialog.Length - 1);
 
-            if (dialogIndex < Dialog.Length && dialogIndex > 0)
+            if (dialogIndex < Dialog.Length && dialogIndex >= 0)
             {
                 Core.Instance.ShowDialog(Dialog[dialogIndex]);
             }
