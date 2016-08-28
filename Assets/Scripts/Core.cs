@@ -9,6 +9,7 @@ public class Core : UnitySingleton<Core> {
     public GameObject MainPlayer;
     public Floor FloorObj;
     public DialogDisplayer DialogManager;
+    public GameObject OffsetObject;
 
     //let right be a positive number
     [SerializeField]
@@ -52,6 +53,9 @@ public class Core : UnitySingleton<Core> {
 
     string configFileName = "config.txt";
 
+    public bool OpenAllRoom = false;
+    public GameObject StatusManager;
+
     void loadConfig()
     {
         //string fileUrl = "file://" + Application.dataPath+"/" + configFileName;
@@ -65,6 +69,16 @@ public class Core : UnitySingleton<Core> {
         LeftBoundX = System.Convert.ToSingle(configJsonObj["LeftBoundX"]);
         FrontBoundZ = System.Convert.ToSingle(configJsonObj["FrontBoundZ"]);
         BackBoundZ = System.Convert.ToSingle(configJsonObj["BackBoundZ"]);
+
+        Vector3 pos = OffsetObject.transform.position;
+
+        pos.z = System.Convert.ToSingle(configJsonObj["OffsetObjectZ"]);
+        pos.y = System.Convert.ToSingle(configJsonObj["OffsetObjectY"]);
+
+        OffsetObject.transform.position = pos;
+
+        OpenAllRoom = System.Convert.ToBoolean(configJsonObj["OpenAllRoom"]);
+
     }
 
     // Use this for initialization
@@ -72,6 +86,8 @@ public class Core : UnitySingleton<Core> {
 		DontDestroyOnLoad (this);
 
         loadConfig();
+
+        StatusManager.gameObject.SetActive(true);
 
         PlayAreaWidth = RightBoundX - LeftBoundX;
 

@@ -25,14 +25,17 @@ public class StatusManager : UnitySingleton<StatusManager>{
 
     // Use this for initialization
     void Start () {
-        TriggerRoom3ToRoom4.SetActive(false);
-        TriggerRoom3ToRoom2.SetActive(false);
-        TriggerRoom2ToRoom1.SetActive(false);
+        if (!Core.Instance.OpenAllRoom)
+        {
+            TriggerRoom3ToRoom4.SetActive(false);
+            TriggerRoom3ToRoom2.SetActive(false);
+            TriggerRoom2ToRoom1.SetActive(false);
 
-        Room1.SetActive(false);
-        Room2.SetActive(false);
-        Room4.SetActive(false);
-        Room5.SetActive(false);
+            Room1.SetActive(false);
+            Room2.SetActive(false);
+            Room4.SetActive(false);
+            Room5.SetActive(false);
+        }
 
     }
 	

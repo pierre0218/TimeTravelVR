@@ -2,5 +2,8 @@
     "RightBoundX":0.7,
     "LeftBoundX" : -2,
     "FrontBoundZ": 0.5,
-    "BackBoundZ" : -2.5
+    "BackBoundZ" : -2.5,
+    "OffsetObjectZ" : -0.35, 
+    "OffsetObjectY" : -3.1, 
+    "OpenAllRoom" : "true"
 }
