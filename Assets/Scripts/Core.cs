@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using MiniJSON;
 
 public class Core : UnitySingleton<Core> {
 
@@ -47,9 +50,28 @@ public class Core : UnitySingleton<Core> {
         get { return roomPosZ; }
     }
 
+    string configFileName = "config.txt";
+
+    void loadConfig()
+    {
+        //string fileUrl = "file://" + Application.dataPath+"/" + configFileName;
+        StreamReader inp_stm = new StreamReader(configFileName);
+
+        string fileText = inp_stm.ReadToEnd();
+        inp_stm.Close();
+
+        Dictionary<string, object> configJsonObj = Json.Deserialize(fileText) as Dictionary<string, object>;
+        RightBoundX = System.Convert.ToSingle(configJsonObj["RightBoundX"]);
+        LeftBoundX = System.Convert.ToSingle(configJsonObj["LeftBoundX"]);
+        FrontBoundZ = System.Convert.ToSingle(configJsonObj["FrontBoundZ"]);
+        BackBoundZ = System.Convert.ToSingle(configJsonObj["BackBoundZ"]);
+    }
+
     // Use this for initialization
     void Start () {
 		DontDestroyOnLoad (this);
+
+        loadConfig();
 
         PlayAreaWidth = RightBoundX - LeftBoundX;
 
