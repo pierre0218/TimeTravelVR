@@ -63,7 +63,12 @@ public class Floor : MonoBehaviour {
 
     [SerializeField]
     int currentRoomIndex = 0;
-    
+
+    float transportingFactor = 0.8f;
+    public void SetTransportingFactor(float f)
+    {
+        transportingFactor = f;
+    }
 
     // Use this for initialization
     void Start () {
@@ -113,7 +118,7 @@ public class Floor : MonoBehaviour {
         {
             Vector3 pos = transform.localPosition;
 
-            pos.z = 0.8f * pos.z + 0.2f * targetPosZ;
+            pos.z = transportingFactor * pos.z + (1- transportingFactor) * targetPosZ;
 
             transform.localPosition = pos;
 

@@ -17,11 +17,19 @@ public class StatusManager : UnitySingleton<StatusManager>{
     public GameObject TriggerRoom3ToRoom2;
     public GameObject TriggerRoom2ToRoom1;
 
+    public GameObject[] MaleActions;
+    public GameObject[] CatActions;
+    bool catAnimationPlayed = false;
+
+    public BoxCollider Roome1CatCollider;
+
     public GameObject Room1;
     public GameObject Room2;
     public GameObject Room3;
     public GameObject Room4;
     public GameObject Room5;
+
+    public bool IsPlayingFinalAnim = false;
 
     // Use this for initialization
     void Start () {
@@ -37,6 +45,15 @@ public class StatusManager : UnitySingleton<StatusManager>{
             Room5.SetActive(false);
         }
 
+        foreach (GameObject maleAction in MaleActions)
+        {
+            maleAction.SetActive(false);
+        }
+
+        foreach (GameObject catAction in CatActions)
+        {
+            catAction.SetActive(false);
+        }
     }
 	
 	// Update is called once per frame
@@ -80,6 +97,39 @@ public class StatusManager : UnitySingleton<StatusManager>{
                 Room1.SetActive(true);
             }
         }
+
+        if (Room1CatClickCount == 8)
+        {
+            if (!catAnimationPlayed)
+            {
+                StartCoroutine(CatRunningAnimation());
+                catAnimationPlayed = true;
+            }
+        }
 	
 	}
+
+    IEnumerator CatRunningAnimation()
+    {
+        if (CatActions.Length < 3)
+            yield break;
+
+        CatActions[0].SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        CatActions[1].SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        CatActions[2].SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        Room1.SetActive(true);
+        IsPlayingFinalAnim = true;
+
+        Core.Instance.FloorObj.SetTransportingFactor(0.99f);
+        Core.Instance.FloorObj.SetTransportingRoom(4);
+    }
 }

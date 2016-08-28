@@ -68,6 +68,11 @@ public class InteractiveObject : MonoBehaviour {
         if (CurrentType == Type.Room1Cat)
         {
             StatusManager.Instance.Room1CatClickCount += 1;
+
+            if(StatusManager.Instance.Room1CatClickCount-1 < StatusManager.Instance.MaleActions.Length)
+            {
+                StatusManager.Instance.MaleActions[StatusManager.Instance.Room1CatClickCount - 1].SetActive(true);
+            }
         }
     }
 }

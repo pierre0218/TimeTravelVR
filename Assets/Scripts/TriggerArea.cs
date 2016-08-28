@@ -20,6 +20,9 @@ public class TriggerArea : MonoBehaviour {
     {
         Debug.Log(other.name+" triggered!!");
 
+        if (StatusManager.Instance.IsPlayingFinalAnim)
+            return;
+
         Vector3 floorPos = Core.Instance.FloorObj.transform.localPosition;
         floorPos.z = Core.Instance.RoomPosZ[NextRoom];
 
