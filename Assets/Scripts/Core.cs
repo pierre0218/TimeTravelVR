@@ -94,6 +94,9 @@ public class Core : UnitySingleton<Core> {
         {
             roomPosZ[j] =  j * roomOffsetLong - j*roomGap;
         }
+
+        // begin at room3
+        FloorObj.SetRoomeImediately(2);
     }
 	
 	// Update is called once per frame

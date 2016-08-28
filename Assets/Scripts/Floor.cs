@@ -61,7 +61,9 @@ public class Floor : MonoBehaviour {
 
     float targetPosZ = 0;
 
+    [SerializeField]
     int currentRoomIndex = 0;
+    
 
     // Use this for initialization
     void Start () {
@@ -196,6 +198,17 @@ public class Floor : MonoBehaviour {
             isTransporting = true;
         }
         currentRoom = room;
+    }
+
+    public void SetRoomeImediately(int roomI)
+    {
+        currentRoomIndex = roomI;
+
+        Vector3 pos = transform.localPosition;
+
+        pos.z = Core.Instance.RoomPosZ[roomI];
+
+        transform.localPosition = pos;
     }
 
     public void SetTransportingRoom(int roomI)
