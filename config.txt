@@ -1,0 +1,6 @@
+{
+    "RightBoundX":1.5,
+    "LeftBoundX" : -1,
+    "FrontBoundZ": 0.5,
+    "BackBoundZ" : -2.5
+}
