@@ -8,7 +8,7 @@ public class DialogDisplayer : MonoBehaviour {
     float displayTimeCounter = 0;
     void OnEnable()
     {
-        displayTimeCounter = 3;
+        displayTimeCounter = 5;
     }
 
 	// Use this for initialization
